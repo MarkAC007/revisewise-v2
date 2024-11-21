@@ -9,7 +9,7 @@
     "scripting"
   ],
   "host_permissions": [
-    "https://app.revisewise.xyz/*"
+    "https://app.revisewise.co/*"
   ],
   "action": {
     "default_popup": "popup.html",
