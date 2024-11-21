@@ -3,7 +3,7 @@ import { resolve } from 'path';
 
 export default defineConfig({
   build: {
-    outDir: 'dist',
+    outDir: '.',
     lib: {
       entry: {
         popup: resolve(__dirname, 'src/popup.ts'),
@@ -16,8 +16,8 @@ export default defineConfig({
     rollupOptions: {
       output: {
         entryFileNames: '[name].js',
-        chunkFileNames: '[name].[hash].js',
-        assetFileNames: '[name].[ext]'
+        chunkFileNames: 'chunks/[name].[hash].js',
+        assetFileNames: 'assets/[name].[ext]'
       }
     }
   },
