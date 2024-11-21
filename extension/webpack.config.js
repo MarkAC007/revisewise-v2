@@ -4,7 +4,7 @@ const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   mode: 'development',
-  devtool: 'cheap-module-source-map',
+  devtool: 'source-map',
   entry: {
     'popup/popup': './src/popup/popup.js',
     'content/content': './src/content/content.js',
@@ -50,7 +50,7 @@ module.exports = {
       ],
     }),
   ],
-  optimization: {
-    minimize: false
+  resolve: {
+    extensions: ['.js']
   }
-};
+}
