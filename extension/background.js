@@ -27,12 +27,12 @@ async function handleStartSession(sendResponse) {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     
     // Check if we're already on the ReviseWise web app
-    if (tab.url.includes('revisewise.web.app')) {
+    if (tab.url.includes('app.revisewise.co')) {
       // Send message to content script to start session
       await chrome.tabs.sendMessage(tab.id, { type: 'START_SESSION' });
     } else {
       // Open ReviseWise web app in new tab
-      await chrome.tabs.create({ url: 'https://revisewise.web.app/dashboard' });
+      await chrome.tabs.create({ url: 'https://app.revisewise.co/dashboard' });
     }
     
     sendResponse({ success: true });
