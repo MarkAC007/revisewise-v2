@@ -4,11 +4,11 @@ const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   mode: 'development',
-  devtool: 'cheap-source-map',
+  devtool: 'cheap-module-source-map',
   entry: {
+    'popup/popup': './src/popup/popup.js',
     'content/content': './src/content/content.js',
-    'background/background': './src/background/background.js',
-    'popup/popup': './src/popup/popup.js'
+    'background/background': './src/background/background.js'
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -32,6 +32,10 @@ module.exports = {
             ]
           }
         }
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
       }
     ]
   },
@@ -39,14 +43,14 @@ module.exports = {
     new Dotenv(),
     new CopyPlugin({
       patterns: [
-        { from: "manifest.json", to: "manifest.json" },
+        { from: "manifest.json" },
         { from: "src/popup/popup.html", to: "popup/popup.html" },
         { from: "src/popup/popup.css", to: "popup/popup.css" },
-        { from: "assets/icons", to: "assets/icons" }
+        { from: "assets", to: "assets" }
       ],
     }),
   ],
   optimization: {
     minimize: false
   }
-}; 
+};
