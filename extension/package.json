@@ -4,13 +4,15 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "vite build",
-    "watch": "vite build --watch"
+    "build": "vite build && node scripts/post-build.js",
+    "watch": "vite build --watch",
+    "clean": "rimraf dist chunks assets"
   },
   "dependencies": {
     "firebase": "^10.8.0"
   },
   "devDependencies": {
-    "vite": "^5.0.12"
+    "vite": "^5.0.12",
+    "rimraf": "^5.0.5"
   }
 }
