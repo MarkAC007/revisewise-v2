@@ -1,0 +1,16 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <circle cx="64" cy="64" r="60" fill="#6B46C1"/>
+  
+  <!-- Book Pages -->
+  <path d="M40 38V90C40 92.2091 41.7909 94 44 94H84C86.2091 94 88 92.2091 88 90V38C88 35.7909 86.2091 34 84 34H44C41.7909 34 40 35.7909 40 38Z" fill="white"/>
+  
+  <!-- Book Lines -->
+  <rect x="48" y="46" width="32" height="4" rx="2" fill="#6B46C1" fill-opacity="0.3"/>
+  <rect x="48" y="56" width="32" height="4" rx="2" fill="#6B46C1" fill-opacity="0.3"/>
+  <rect x="48" y="66" width="24" height="4" rx="2" fill="#6B46C1" fill-opacity="0.3"/>
+  
+  <!-- Magnifying Glass -->
+  <circle cx="82" cy="82" r="12" stroke="white" stroke-width="6"/>
+  <line x1="90.4142" y1="90.4142" x2="98.4142" y2="98.4142" stroke="white" stroke-width="6" stroke-linecap="round"/>
+</svg> 

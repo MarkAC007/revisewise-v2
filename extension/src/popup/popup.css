@@ -1,0 +1,286 @@
+:root {
+  --primary-color: #6357FF;
+  --primary-hover: #5346FF;
+  --secondary-color: #FFD23F;
+  --secondary-hover: #F2C52E;
+  --background: #ffffff;
+  --text: #1f2937;
+  --text-light: #6b7280;
+  --error: #dc2626;
+  --success: #059669;
+  --border: #e5e7eb;
+}
+
+body {
+  width: 320px;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--background);
+  color: var(--text);
+}
+
+.container {
+  padding: 0;
+}
+
+.header {
+  background: var(--primary-color);
+  color: white;
+  padding: 24px 20px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.header h1 {
+  color: white;
+  font-size: 24px;
+  margin: 0;
+  font-weight: 600;
+}
+
+.header .logo-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.subtitle {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 16px;
+}
+
+.section {
+  padding: 0 20px;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.input-field {
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.input-field:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(99, 87, 255, 0.1);
+}
+
+.primary-button {
+  background: var(--secondary-color);
+  color: var(--text);
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  width: 100%;
+}
+
+.primary-button:hover {
+  background: var(--secondary-hover);
+}
+
+.auth-links {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  padding: 4px 0;
+}
+
+.auth-links a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.auth-links a:hover {
+  text-decoration: underline;
+}
+
+.user-info {
+  background: var(--primary-color);
+  color: white;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.email-text {
+  font-weight: 500;
+}
+
+.role-badge {
+  background: var(--secondary-color);
+  color: var(--text);
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  margin-left: 8px;
+}
+
+.usage-info {
+  background: #f9fafb;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+}
+
+.usage-stat {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.label {
+  color: var(--text-light);
+}
+
+.instructions {
+  text-align: center;
+  color: var(--text-light);
+  font-size: 12px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.error-message {
+  color: var(--error);
+  font-size: 12px;
+  padding: 8px;
+  background: #fef2f2;
+  border-radius: 4px;
+}
+
+.hidden {
+  display: none;
+}
+
+.usage-alert {
+  background-color: #fef2f2;
+  color: #dc2626;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  margin-top: 4px;
+  display: none;
+}
+
+.usage-alert.visible {
+  display: block;
+}
+
+.history-section {
+  margin-top: 16px;
+  background: #f8f7ff;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--primary-color);
+}
+
+.history-header {
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e5e7eb;
+  cursor: pointer;
+}
+
+.history-header h3 {
+  margin: 0;
+  font-size: 14px;
+  color: #374151;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: #6b7280;
+}
+
+.icon-button:hover {
+  color: #374151;
+}
+
+.history-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.history-content.visible {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.query-list {
+  padding: 8px;
+}
+
+.query-item {
+  padding: 8px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.query-item:last-child {
+  border-bottom: none;
+}
+
+.query-text {
+  font-size: 12px;
+  color: #374151;
+  margin-bottom: 4px;
+}
+
+.query-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #6b7280;
+}
+
+.progress-bar {
+  height: 4px;
+  background: #e5e7eb;
+  border-radius: 2px;
+  margin-top: 8px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--primary-color);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.progress-fill.warning {
+  background: var(--secondary-color);
+}
+
+.progress-fill.danger {
+  background: #dc2626;
+}
+ 
