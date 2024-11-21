@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>ReviseWise</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo-container">
+        <img src="../assets/icons/logo.svg" alt="ReviseWise" class="logo-icon">
+        <h1>ReviseWise</h1>
+      </div>
+      <p class="subtitle">Learn Smarter, Not Harder</p>
+    </header>
+
+    <!-- Auth Section -->
+    <div id="login-section" class="section">
+      <div class="auth-form">
+        <input type="email" id="email" placeholder="Email" class="input-field">
+        <input type="password" id="password" placeholder="Password" class="input-field">
+        <button id="login-button" class="primary-button">Sign In</button>
+        <div class="auth-links">
+          <a href="#" id="signup-link">Create Account</a>
+          <a href="#" id="forgot-password">Forgot Password?</a>
+        </div>
+        <div id="auth-error" class="error-message hidden"></div>
+      </div>
+    </div>
+
+    <!-- User Section (hidden by default) -->
+    <div id="user-section" class="section hidden">
+      <div class="user-info">
+        <span id="user-email" class="email-text"></span>
+        <span id="user-role" class="role-badge"></span>
+      </div>
+
+      <!-- Usage Stats -->
+      <div class="usage-info">
+        <div class="usage-stat">
+          <span class="label">Queries Today:</span>
+          <span id="queries-count">0</span>
+        </div>
+        <div class="usage-stat">
+          <span class="label">Remaining:</span>
+          <span id="queries-remaining">50</span>
+          <div id="usage-alert" class="usage-alert hidden">
+            Running low on queries today!
+          </div>
+        </div>
+      </div>
+
+      <!-- History Section -->
+      <div class="history-section">
+        <div class="history-header">
+          <h3>Recent Queries</h3>
+          <button id="toggle-history" class="icon-button">
+            <span class="arrow-down">▼</span>
+          </button>
+        </div>
+        <div id="history-content" class="history-content hidden">
+          <div id="query-list" class="query-list">
+            <!-- Query items will be inserted here -->
+          </div>
+        </div>
+      </div>
+
+      <button id="logout-button" class="secondary-button">Sign Out</button>
+    </div>
+
+    <!-- Instructions -->
+    <div class="instructions">
+      <p>Select text and right-click to explain</p>
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html> 
