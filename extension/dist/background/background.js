@@ -14,7 +14,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 class ApiClient {
   constructor() {
-    this.baseUrl = 'http://localhost:3000/api/v1';
+    this.baseUrl = 'https://revisewise-api.azurewebsites.net/api/v1';
   }
   async explain(text, user) {
     try {
