@@ -1,6 +1,6 @@
 class ApiClient {
   constructor() {
-    this.baseUrl = 'http://localhost:3000/api/v1';
+    this.baseUrl = 'https://revisewise-api.azurewebsites.net/api/v1';
   }
 
   async explain(text, user) {
@@ -38,4 +38,4 @@ class ApiClient {
   }
 }
 
-export const apiClient = new ApiClient(); 
+export const apiClient = new ApiClient();
