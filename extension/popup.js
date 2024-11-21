@@ -1,157 +1,94 @@
-import { initializeApp } from 'firebase/app';
-import { 
-  getAuth, 
-  signInWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged
-} from 'firebase/auth';
-import { getFirestore, doc, getDoc } from 'firebase/firestore';
-
-const firebaseConfig = {
-  apiKey: "AIzaSyCLzrL67qaYtz0Bg6h25k6K-fHrLN3X6No",
-  authDomain: "app.revisewise.xyz",
-  projectId: "revisewise",
-  storageBucket: "revisewise.firebasestorage.app",
-  messagingSenderId: "819105471747",
-  appId: "1:819105471747:web:4fba3b988c6d0d9863dd36"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-// DOM Elements
-const loginView = document.getElementById('loginView');
-const profileView = document.getElementById('profileView');
-const loginForm = document.getElementById('loginForm');
-const logoutButton = document.getElementById('logoutButton');
-const startSession = document.getElementById('startSession');
-const userName = document.getElementById('userName');
-const userEmail = document.getElementById('userEmail');
-const userRole = document.getElementById('userRole');
-const userAvatar = document.getElementById('userAvatar');
-const studyTime = document.getElementById('studyTime');
-const sessionCount = document.getElementById('sessionCount');
-const errorMessage = document.getElementById('errorMessage');
-
-// Event Listeners
-loginForm.addEventListener('submit', handleLogin);
-logoutButton.addEventListener('click', handleSignOut);
-startSession.addEventListener('click', handleStartSession);
-
-// Check authentication state on popup open
-auth.onAuthStateChanged(handleAuthStateChanged);
-
-async function handleLogin(e) {
-  e.preventDefault();
-  
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
-
+import { o as w, l as o, s as y, a as s, b as E, g as I, d as p, c as L } from "./chunks/logger.C_sQt7f9.js";
+const u = document.getElementById("loginView"), l = document.getElementById("profileView"), m = document.getElementById("loginForm"), v = document.getElementById("logoutButton"), B = document.getElementById("startSession"), C = document.getElementById("userName"), S = document.getElementById("userEmail"), b = document.getElementById("userRole"), A = document.getElementById("userAvatar"), T = document.getElementById("studyTime"), x = document.getElementById("sessionCount"), i = document.getElementById("errorMessage");
+m.addEventListener("submit", F);
+v.addEventListener("click", N);
+B.addEventListener("click", V);
+w(s, P);
+window.addEventListener("online", () => {
+  o.syncLocalLogs();
+});
+async function F(t) {
+  t.preventDefault();
+  const n = document.getElementById("email"), e = document.getElementById("password"), r = n.value, d = e.value;
   try {
-    hideError();
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    await loadUserProfile(userCredential.user);
-    showProfileView();
-  } catch (error) {
-    console.error('Authentication error:', error);
-    showError(getErrorMessage(error.code));
+    U(), await o.info("Login attempt", { email: r });
+    const a = await y(s, r, d);
+    await g(a.user), await o.info("Login successful", { userId: a.user.uid }), f();
+  } catch (a) {
+    console.error("Authentication error:", a), await o.error("Login failed", { email: r }, a), c(R(a.code));
   }
 }
-
-async function handleSignOut() {
+async function N() {
+  var t, n;
   try {
-    await signOut(auth);
-    showLoginView();
-  } catch (error) {
-    console.error('Sign out error:', error);
-    showError('Failed to sign out. Please try again.');
+    const e = (t = s.currentUser) == null ? void 0 : t.uid;
+    await o.info("Logout attempt", { userId: e }), await E(s), await o.info("Logout successful", { userId: e }), h();
+  } catch (e) {
+    console.error("Sign out error:", e), await o.error("Logout failed", { userId: (n = s.currentUser) == null ? void 0 : n.uid }, e), c("Failed to sign out. Please try again.");
   }
 }
-
-async function handleAuthStateChanged(user) {
-  if (user) {
-    await loadUserProfile(user);
-    showProfileView();
-  } else {
-    showLoginView();
+async function P(t) {
+  try {
+    t ? (await g(t), f(), await o.info("Auth state changed - user logged in", { userId: t.uid })) : (h(), await o.info("Auth state changed - user logged out"));
+  } catch (n) {
+    await o.error("Error handling auth state change", {}, n);
   }
 }
-
-async function loadUserProfile(user) {
+async function g(t) {
   try {
-    // Get user data from Firestore
-    const userDoc = await getDoc(doc(db, 'users', user.uid));
-    const userData = userDoc.data();
-
-    // Update UI
-    userName.textContent = userData?.name || 'Student';
-    userEmail.textContent = user.email;
-    userRole.textContent = userData?.role || 'Student';
-    userAvatar.src = userData?.photoURL || 'icons/default-avatar.png';
-
-    if (userData?.stats) {
-      studyTime.textContent = formatStudyTime(userData.stats.totalStudyTime || 0);
-      sessionCount.textContent = userData.stats.sessionsCompleted || 0;
-    }
-
-    // Enable text selection feature
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      chrome.tabs.sendMessage(tabs[0].id, { 
-        type: 'ENABLE_TEXT_SELECTION',
-        userRole: userData?.role
-      });
+    const e = (await I(p(L, "users", t.uid))).data();
+    C.textContent = (e == null ? void 0 : e.name) || "Student", S.textContent = t.email, b.textContent = (e == null ? void 0 : e.role) || "Student", A.src = (e == null ? void 0 : e.photoURL) || "icons/default-avatar.png", e != null && e.stats && (T.textContent = M(e.stats.totalStudyTime || 0), x.textContent = e.stats.sessionsCompleted || 0), await o.info("User profile loaded", { userId: t.uid }), chrome.tabs.query({ active: !0, currentWindow: !0 }, async (r) => {
+      try {
+        if (!r[0].id) throw new Error("No active tab found");
+        await chrome.tabs.sendMessage(r[0].id, {
+          type: "ENABLE_TEXT_SELECTION",
+          userRole: e == null ? void 0 : e.role
+        }), await o.info("Text selection enabled", {
+          userId: t.uid,
+          tabId: r[0].id
+        });
+      } catch (d) {
+        await o.error("Failed to enable text selection", {
+          userId: t.uid,
+          tabId: r[0].id
+        }, d);
+      }
     });
-  } catch (error) {
-    console.error('Error loading profile:', error);
-    showError('Failed to load profile data.');
+  } catch (n) {
+    console.error("Error loading profile:", n), await o.error("Failed to load user profile", { userId: t.uid }, n), c("Failed to load profile data.");
   }
 }
-
-function handleStartSession() {
-  chrome.tabs.create({ url: 'https://app.revisewise.xyz/dashboard' });
+function V() {
+  chrome.tabs.create({ url: "https://app.revisewise.co/dashboard" });
 }
-
-function showLoginView() {
-  loginView.classList.remove('hidden');
-  profileView.classList.add('hidden');
-  loginForm.reset();
+function h() {
+  u.classList.remove("hidden"), l.classList.add("hidden"), m.reset();
 }
-
-function showProfileView() {
-  loginView.classList.add('hidden');
-  profileView.classList.remove('hidden');
+function f() {
+  u.classList.add("hidden"), l.classList.remove("hidden");
 }
-
-function formatStudyTime(minutes) {
-  const hours = Math.floor(minutes / 60);
-  return `${hours}h`;
+function M(t) {
+  return `${Math.floor(t / 60)}h`;
 }
-
-function showError(message) {
-  errorMessage.textContent = message;
-  errorMessage.classList.remove('hidden');
+function c(t) {
+  i.textContent = t, i.classList.remove("hidden");
 }
-
-function hideError() {
-  errorMessage.textContent = '';
-  errorMessage.classList.add('hidden');
+function U() {
+  i.textContent = "", i.classList.add("hidden");
 }
-
-function getErrorMessage(errorCode) {
-  switch (errorCode) {
-    case 'auth/invalid-credential':
-      return 'Invalid email or password';
-    case 'auth/user-disabled':
-      return 'This account has been disabled';
-    case 'auth/user-not-found':
-      return 'No account found with this email';
-    case 'auth/wrong-password':
-      return 'Incorrect password';
-    case 'auth/too-many-requests':
-      return 'Too many failed attempts. Please try again later';
+function R(t) {
+  switch (t) {
+    case "auth/invalid-credential":
+      return "Invalid email or password";
+    case "auth/user-disabled":
+      return "This account has been disabled";
+    case "auth/user-not-found":
+      return "No account found with this email";
+    case "auth/wrong-password":
+      return "Incorrect password";
+    case "auth/too-many-requests":
+      return "Too many failed attempts. Please try again later";
     default:
-      return 'An error occurred. Please try again';
+      return "An error occurred. Please try again";
   }
 }
