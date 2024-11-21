@@ -1,16 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Background Circle -->
-  <circle cx="64" cy="64" r="60" fill="#6B46C1"/>
-  
-  <!-- Book Pages -->
-  <path d="M40 38V90C40 92.2091 41.7909 94 44 94H84C86.2091 94 88 92.2091 88 90V38C88 35.7909 86.2091 34 84 34H44C41.7909 34 40 35.7909 40 38Z" fill="white"/>
-  
-  <!-- Book Lines -->
-  <rect x="48" y="46" width="32" height="4" rx="2" fill="#6B46C1" fill-opacity="0.3"/>
-  <rect x="48" y="56" width="32" height="4" rx="2" fill="#6B46C1" fill-opacity="0.3"/>
-  <rect x="48" y="66" width="24" height="4" rx="2" fill="#6B46C1" fill-opacity="0.3"/>
-  
-  <!-- Magnifying Glass -->
-  <circle cx="82" cy="82" r="12" stroke="white" stroke-width="6"/>
-  <line x1="90.4142" y1="90.4142" x2="98.4142" y2="98.4142" stroke="white" stroke-width="6" stroke-linecap="round"/>
-</svg> 
+  <rect width="128" height="128" rx="24" fill="#4F46E5"/>
+  <path d="M94 42H34C31.7909 42 30 43.7909 30 46V82C30 84.2091 31.7909 86 34 86H94C96.2091 86 98 84.2091 98 82V46C98 43.7909 96.2091 42 94 42Z" stroke="white" stroke-width="4"/>
+  <path d="M64 54V74M54 64H74" stroke="white" stroke-width="4" stroke-linecap="round"/>
+</svg>
