@@ -4,7 +4,7 @@ import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCLzrL67qaYtz0Bg6h25k6K-fHrLN3X6No",
-  authDomain: "app.revisewise.xyz",
+  authDomain: "app.revisewise.co",
   projectId: "revisewise",
   storageBucket: "revisewise.firebasestorage.app",
   messagingSenderId: "819105471747",
