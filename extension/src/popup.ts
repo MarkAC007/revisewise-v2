@@ -5,6 +5,7 @@ import {
 } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { auth, db } from './lib/firebase';
+import { logger } from './lib/logger';
 
 // DOM Elements
 const loginView = document.getElementById('loginView') as HTMLDivElement;
@@ -28,6 +29,11 @@ startSession.addEventListener('click', handleStartSession);
 // Check authentication state on popup open
 onAuthStateChanged(auth, handleAuthStateChanged);
 
+// Sync local logs when online
+window.addEventListener('online', () => {
+  logger.syncLocalLogs();
+});
+
 async function handleLogin(e: Event) {
   e.preventDefault();
   
@@ -38,31 +44,44 @@ async function handleLogin(e: Event) {
 
   try {
     hideError();
+    await logger.info('Login attempt', { email });
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     await loadUserProfile(userCredential.user);
+    await logger.info('Login successful', { userId: userCredential.user.uid });
     showProfileView();
   } catch (error: any) {
     console.error('Authentication error:', error);
+    await logger.error('Login failed', { email }, error);
     showError(getErrorMessage(error.code));
   }
 }
 
 async function handleSignOut() {
   try {
+    const userId = auth.currentUser?.uid;
+    await logger.info('Logout attempt', { userId });
     await signOut(auth);
+    await logger.info('Logout successful', { userId });
     showLoginView();
   } catch (error) {
     console.error('Sign out error:', error);
+    await logger.error('Logout failed', { userId: auth.currentUser?.uid }, error);
     showError('Failed to sign out. Please try again.');
   }
 }
 
 async function handleAuthStateChanged(user: any) {
-  if (user) {
-    await loadUserProfile(user);
-    showProfileView();
-  } else {
-    showLoginView();
+  try {
+    if (user) {
+      await loadUserProfile(user);
+      showProfileView();
+      await logger.info('Auth state changed - user logged in', { userId: user.uid });
+    } else {
+      showLoginView();
+      await logger.info('Auth state changed - user logged out');
+    }
+  } catch (error) {
+    await logger.error('Error handling auth state change', {}, error);
   }
 }
 
@@ -83,21 +102,38 @@ async function loadUserProfile(user: any) {
       sessionCount.textContent = userData.stats.sessionsCompleted || 0;
     }
 
+    await logger.info('User profile loaded', { userId: user.uid });
+
     // Enable text selection feature
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      chrome.tabs.sendMessage(tabs[0].id!, { 
-        type: 'ENABLE_TEXT_SELECTION',
-        userRole: userData?.role
-      });
+    chrome.tabs.query({ active: true, currentWindow: true }, async (tabs) => {
+      try {
+        if (!tabs[0].id) throw new Error('No active tab found');
+        
+        await chrome.tabs.sendMessage(tabs[0].id, { 
+          type: 'ENABLE_TEXT_SELECTION',
+          userRole: userData?.role
+        });
+        
+        await logger.info('Text selection enabled', { 
+          userId: user.uid,
+          tabId: tabs[0].id
+        });
+      } catch (error) {
+        await logger.error('Failed to enable text selection', {
+          userId: user.uid,
+          tabId: tabs[0].id
+        }, error);
+      }
     });
   } catch (error) {
     console.error('Error loading profile:', error);
+    await logger.error('Failed to load user profile', { userId: user.uid }, error);
     showError('Failed to load profile data.');
   }
 }
 
 function handleStartSession() {
-  chrome.tabs.create({ url: 'https://app.revisewise.xyz/dashboard' });
+  chrome.tabs.create({ url: 'https://app.revisewise.co/dashboard' });
 }
 
 function showLoginView() {
